@@ -1,6 +1,5 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import Layout from '../../components/Layout'
 
 const Jeans: NextPage = () => {
   return (
@@ -16,11 +15,9 @@ const Jeans: NextPage = () => {
           href={'/favicon.ico'}
         />
       </Head>
-      <Layout>
-        <div>
-          <p>Jeans</p>
-        </div>
-      </Layout>
+      <div>
+        <p>Jeans</p>
+      </div>
     </>
   )
 }

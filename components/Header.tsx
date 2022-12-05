@@ -6,14 +6,19 @@ const Header = (): JSX.Element => {
   const [isShowSearchInput, setShowSeatchInput] = React.useState<boolean>(false)
   const handleShowSearchInput = React.useCallback(() => { setShowSeatchInput(!isShowSearchInput) }, [isShowSearchInput])
   const { route } = useRouter()
-  const pageName = route.split('/')[1]
   const headerTitleFromRoute = React.useCallback((routeName: string): string => {
-    return routeName.charAt(0).toUpperCase() + routeName.slice(1)
+    const pageName = routeName.split('/')
+
+    if (pageName.length > 2) {
+      return pageName[2]?.charAt(0).toUpperCase() + pageName[2]?.slice(1)
+    } else {
+      return pageName[1].charAt(0).toUpperCase() + pageName[1].slice(1)
+    }
   }, [])
   return (
     <header className={''}>
       <div className={'w-full flex items-center justify-between p-2'}>
-        <p className={'my-6 text-2xl font-light'}>{headerTitleFromRoute(pageName)}</p>
+        <p className={'my-6 text-2xl font-light'}>{headerTitleFromRoute(route)}</p>
         <div className={'flex space-x-3 my-4'}>
           <div className={`flex items-center  ${isShowSearchInput ? 'border border-black' : 'border-none'} transition-all ease-in-out duration-700`}>
             <input
