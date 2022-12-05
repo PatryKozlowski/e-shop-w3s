@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
-import Layout from '../components/Layout'
+import Layout from '../../components/Layout'
 
-const Home: NextPage = () => {
+const Jeans: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Clothes shop</title>
+        <title>Clothes shop - Jeans</title>
         <meta
           name={'description'}
           content={'The best clothes on the world'}
@@ -16,9 +16,13 @@ const Home: NextPage = () => {
           href={'/favicon.ico'}
         />
       </Head>
-      <Layout />
+      <Layout>
+        <div>
+          <p>Jeans</p>
+        </div>
+      </Layout>
     </>
   )
 }
 
-export default Home
+export default Jeans

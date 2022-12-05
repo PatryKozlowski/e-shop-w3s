@@ -2,6 +2,9 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  images: {
+    domains: ['www.w3schools.com', 'cdn.sanity.io']
+  }
 }
 
 module.exports = nextConfig
