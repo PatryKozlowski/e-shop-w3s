@@ -16,8 +16,8 @@ const Header = (): JSX.Element => {
     }
   }, [])
   return (
-    <header className={''}>
-      <div className={'w-full flex items-center justify-between p-2'}>
+    <header className={'px-4 lg:px-0'}>
+      <div className={'flex items-center justify-between p-2'}>
         <p className={'my-6 text-2xl font-light'}>{headerTitleFromRoute(route)}</p>
         <div className={'flex space-x-3 my-4'}>
           <div className={`flex items-center  ${isShowSearchInput ? 'border border-black' : 'border-none'} transition-all ease-in-out duration-700`}>

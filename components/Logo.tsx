@@ -1,7 +1,7 @@
 
 const Logo = (): JSX.Element => {
   return (
-    <div className={'p-4'}>
+    <div className={'p-'}>
       <h3 className={'tracking-[4px] font-semibold text-2xl my-3'}>
         LOGO
       </h3>
