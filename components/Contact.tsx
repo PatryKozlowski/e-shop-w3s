@@ -37,8 +37,9 @@ const Contact = (): JSX.Element => {
   ]
 
   return (
-    <section className={'bg-gray-200 grid grid-cols-3 py-16 text-center'}>
-      <form className={'px-4 flex flex-col space-y-4 text-xs'}>
+    // <section className={'bg-gray-200 grid grid-cols-3 py-16 text-center'}>
+    <section className={'bg-gray-200 flex basis-1/3 py-16 text-center'}>
+      <form className={'px-4 flex flex-col space-y-4 text-xs w-1/3'}>
         <h4 className={'text-xl my-2'}>Contact</h4>
         <p className={'my-3'}>Questions? Go ahead.</p>
         <input
@@ -65,7 +66,7 @@ const Contact = (): JSX.Element => {
           Send
         </button>
       </form>
-      <div className={'text-xs'}>
+      <div className={'text-xs mx-2 w-1/3'}>
         <h4 className={'my-2 text-xl'}>About</h4>
         <div className={'space-y-4 flex flex-col '}>
           {
@@ -113,7 +114,7 @@ const Contact = (): JSX.Element => {
             ))
           }
         </div>
-        <div className={'flex lg:space-x-2 text-lg'}>
+        <div className={'flex space-x-2 text-lg'}>
           {
             socialItems.map(({ icon, href }, index) => (
               <Link
