@@ -14,7 +14,7 @@ interface Props {
 
 const Layout = ({ children }: Props): JSX.Element => {
   return (
-    <div className={'lg:max-w-container lg:mx-auto flex flex-col'}>
+    <div className={'mx-w-full lg:max-w-container lg:mx-auto flex flex-col'}>
       <MobileHeader />
       <Nav>
         <Logo />

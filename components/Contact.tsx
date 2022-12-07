@@ -113,7 +113,7 @@ const Contact = (): JSX.Element => {
             ))
           }
         </div>
-        <div className={'flex space-x-2 text-lg'}>
+        <div className={'flex lg:space-x-2 text-lg'}>
           {
             socialItems.map(({ icon, href }, index) => (
               <Link
