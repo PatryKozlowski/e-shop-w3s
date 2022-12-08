@@ -49,7 +49,7 @@ const Nav = ({ children }: Props): JSX.Element => {
   return (
     <nav
       className={`w-full h-full lg:w-[250px] bg-white z-30 fixed 
-      top-0 lg:overflow-auto flex flex-col items-center ${!isOpenNavMenu && isSmall === true ? 'translate-x-full' : 'translate-x-0'}
+      top-0 lg:overflow-auto flex flex-col items-center lg:translate-x-0 ${!isOpenNavMenu ? 'translate-x-full' : 'translate-x-0'}
       transition ease-in-out duration-300
       `}
     >
