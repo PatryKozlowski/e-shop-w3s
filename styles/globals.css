@@ -6,7 +6,7 @@
 
 @layer base {
   body {
-    @apply p-0 m-0 font-montserrat
+    @apply p-0 m-0 font-montserrat overflow-hidden lg:overflow-auto
   }
 }
 

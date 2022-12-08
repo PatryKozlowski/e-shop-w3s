@@ -19,7 +19,7 @@ const Layout = ({ children }: Props): JSX.Element => {
       <Nav>
         <Logo />
       </Nav>
-      <main className={'lg:w-[950px] lg:ml-[250px] lg:px-4'}>
+      <main className={'lg:w-[950px] lg:ml-[250px] lg:px-4 mt-24 lg:mt-0'}>
         <Header />
 
         <Banner />

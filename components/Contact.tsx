@@ -37,7 +37,6 @@ const Contact = (): JSX.Element => {
   ]
 
   return (
-    // <section className={'bg-gray-200 grid grid-cols-3 py-16 text-center'}>
     <section className={'bg-gray-200 flex basis-1/3 py-16 text-center'}>
       <form className={'px-4 flex flex-col space-y-4 text-xs w-1/3'}>
         <h4 className={'text-xl my-2'}>Contact</h4>

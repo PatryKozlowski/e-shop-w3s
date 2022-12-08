@@ -2,14 +2,30 @@ import Link from 'next/link'
 import React, { ReactNode } from 'react'
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md'
 import { AnimatePresence, motion } from 'framer-motion'
+import useWindowDimensions from '../hooks/useWindowDimensions'
+import { useAppSelector } from '../hooks/useAppSelector'
 
 interface Props {
   children: ReactNode
 }
 
 const Nav = ({ children }: Props): JSX.Element => {
+  const isOpenNavMenu = useAppSelector((state) => state.mobileNav.isMobileNavOpen)
   const [isShowSubNav, setShowSubNav] = React.useState<boolean>(false)
-  const handleSubMenu = React.useCallback(() => { setShowSubNav(!isShowSubNav) }, [isShowSubNav])
+  const { width } = useWindowDimensions()
+  const SmallScreenCheck = React.useCallback((): boolean | undefined => {
+    if (width !== null) {
+      return width < 1024
+    }
+  }, [width])
+
+  const isSmall = SmallScreenCheck()
+
+  const handleSubMenu = React.useCallback(() => {
+    if (!isSmall) {
+      setShowSubNav(!isShowSubNav)
+    }
+  }, [isShowSubNav, isSmall])
 
   const subMenuAnimate = {
     enter: {
@@ -31,8 +47,15 @@ const Nav = ({ children }: Props): JSX.Element => {
   }
 
   return (
-    <nav className={'hidden lg:block h-full w-[250px] fixed top-0 overflow-auto'}>
-      {children}
+    <nav
+      className={`w-full h-full lg:w-[250px] bg-white z-30 fixed 
+      top-0 lg:overflow-auto flex flex-col items-center ${!isOpenNavMenu && isSmall === true ? 'translate-x-full' : 'translate-x-0'}
+      transition ease-in-out duration-300
+      `}
+    >
+      <div className={'hidden lg:block'}>
+        {children}
+      </div>
       <div className={'py-16 font-roboto text-[18px] flex flex-col cursor-pointer text-gray-600'}>
         <Link
           className={'navLink hoverNav'}
@@ -45,53 +68,58 @@ const Nav = ({ children }: Props): JSX.Element => {
         >Dresses
         </Link>
         <div
-          className={`flex items-center navLink hoverNav ${isShowSubNav ? 'text-black font-semibold' : ''}`}
+          className={`lg:flex items-center navLink hoverNav ${isShowSubNav ? 'text-black font-semibold' : ''}`}
           onClick={handleSubMenu}
         >
           <Link href={'/jeans'}>
             Jeans
           </Link>
-          <MdArrowDropDown size={30} />
+          <MdArrowDropDown
+            size={30}
+            className={'hidden lg:block'}
+          />
         </div>
         <AnimatePresence>
           {
-            isShowSubNav &&
-            <motion.div
-              className={'py-2 px-4 text-[15px] flex flex-col'}
-              initial={'enter'}
-              animate={isShowSubNav ? 'exit' : 'enter'}
-              variants={subMenuAnimate}
-              exit={'enter'}
-            >
-              <Link
-                className={'navLink hoverNav flex items-center'}
-                href={'/jeans/skinny'}
+            isShowSubNav && isSmall === false ?
+              <motion.div
+                className={'hidden py-2 px-4 text-[15px] lg:flex lg:flex-col'}
+                initial={'enter'}
+                animate={isShowSubNav ? 'exit' : 'enter'}
+                variants={subMenuAnimate}
+                exit={'enter'}
               >
-                <MdArrowRight size={26} />
-                Skinny
-              </Link>
-              <Link
-                className={'navLink hoverNav flex items-center'}
-                href={'/'}
-              >
-                <MdArrowRight size={26} />
-                Relaxed
-              </Link>
-              <Link
-                className={'navLink hoverNav flex items-center'}
-                href={'/'}
-              >
-                <MdArrowRight size={26} />
-                Bootcut
-              </Link>
-              <Link
-                className={'navLink hoverNav flex items-center'}
-                href={'/'}
-              >
-                <MdArrowRight size={26} />
-                Straight
-              </Link>
-            </motion.div>
+                <Link
+                  className={'navLink hoverNav flex items-center'}
+                  href={'/jeans/skinny'}
+                >
+                  <MdArrowRight size={26} />
+                  Skinny
+                </Link>
+                <Link
+                  className={'navLink hoverNav flex items-center'}
+                  href={'/'}
+                >
+                  <MdArrowRight size={26} />
+                  Relaxed
+                </Link>
+                <Link
+                  className={'navLink hoverNav flex items-center'}
+                  href={'/'}
+                >
+                  <MdArrowRight size={26} />
+                  Bootcut
+                </Link>
+                <Link
+                  className={'navLink hoverNav flex items-center'}
+                  href={'/'}
+                >
+                  <MdArrowRight size={26} />
+                  Straight
+                </Link>
+              </motion.div>
+              :
+              null
           }
         </AnimatePresence>
         <Link
@@ -115,7 +143,7 @@ const Nav = ({ children }: Props): JSX.Element => {
         >Shoes
         </Link>
       </div>
-      <div className={'font-roboto text-[15px] flex flex-col'}>
+      <div className={'font-roboto lg:text-[15px] flex flex-col'}>
         <Link
           href={'/'}
           className={'py-2 px-4 hoverNav'}
