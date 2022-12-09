@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Head from 'next/head'
+import Products from '../../components/Products'
 
 const Jeans: NextPage = () => {
   return (
@@ -15,9 +16,7 @@ const Jeans: NextPage = () => {
           href={'/favicon.ico'}
         />
       </Head>
-      <div>
-        <p>Jeans</p>
-      </div>
+      <Products />
     </>
   )
 }

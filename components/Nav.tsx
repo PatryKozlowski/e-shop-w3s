@@ -21,6 +21,14 @@ const Nav = ({ children }: Props): JSX.Element => {
 
   const isSmall = SmallScreenCheck()
 
+  React.useEffect(() => {
+    if (isSmall && isOpenNavMenu) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpenNavMenu, isSmall])
+
   const handleSubMenu = React.useCallback(() => {
     if (!isSmall) {
       setShowSubNav(!isShowSubNav)
@@ -48,8 +56,8 @@ const Nav = ({ children }: Props): JSX.Element => {
 
   return (
     <nav
-      className={`w-full h-full lg:w-[250px] bg-white z-30 fixed 
-      top-0 lg:overflow-auto flex flex-col items-center lg:translate-x-0 ${!isOpenNavMenu ? 'translate-x-full' : 'translate-x-0'}
+      className={`w-full h-full lg:w-[250px] bg-white z-30 fixed lg:overflow-auto
+      top-0 flex flex-col items-center lg:translate-x-0 ${!isOpenNavMenu ? 'translate-x-full' : 'translate-x-0'}
       transition ease-in-out duration-300
       `}
     >
@@ -81,9 +89,9 @@ const Nav = ({ children }: Props): JSX.Element => {
         </div>
         <AnimatePresence>
           {
-            isShowSubNav && isSmall === false ?
+            isShowSubNav && !isSmall ?
               <motion.div
-                className={'hidden py-2 px-4 text-[15px] lg:flex lg:flex-col'}
+                className={'py-2 px-4 text-[15px] flex flex-col'}
                 initial={'enter'}
                 animate={isShowSubNav ? 'exit' : 'enter'}
                 variants={subMenuAnimate}

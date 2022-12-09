@@ -11,11 +11,12 @@ const MobileHeader = (): JSX.Element => {
   const handleOenMenu = React.useCallback(() => {
     dispatch(openMobileNav(!isOpenNavMenu))
   }, [dispatch, isOpenNavMenu])
+
   return (
     <header className={'flex lg:hidden bg-black text-white fixed top-0 left-0 w-full z-50 mb-8'}>
       <div className={'flex items-center justify-between w-full'}>
         < Logo />
-        <div className={'px-3 py-4 mr-4'}>
+        <div className={'px-3 py-4 mr-2'}>
           <HamburegerButton
             isOpen={isOpenNavMenu}
             onClick={(handleOenMenu)}
