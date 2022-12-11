@@ -64,7 +64,7 @@ const Nav = ({ children }: Props): JSX.Element => {
       <div className={'hidden lg:block'}>
         {children}
       </div>
-      <div className={'py-16 font-roboto text-[18px] flex flex-col cursor-pointer text-gray-600'}>
+      <div className={'px-3 py-16 font-roboto text-[18px] flex flex-col w-[150px] cursor-pointer text-gray-600'}>
         <Link
           className={'navLink hoverNav'}
           href={'/'}
@@ -77,7 +77,6 @@ const Nav = ({ children }: Props): JSX.Element => {
         </Link>
         <div
           className={`lg:flex items-center navLink hoverNav ${isShowSubNav ? 'text-black font-semibold' : ''}`}
-          onClick={handleSubMenu}
         >
           <Link href={'/jeans'}>
             Jeans
@@ -85,6 +84,7 @@ const Nav = ({ children }: Props): JSX.Element => {
           <MdArrowDropDown
             size={30}
             className={'hidden lg:block'}
+            onClick={handleSubMenu}
           />
         </div>
         <AnimatePresence>
@@ -151,7 +151,7 @@ const Nav = ({ children }: Props): JSX.Element => {
         >Shoes
         </Link>
       </div>
-      <div className={'font-roboto lg:text-[15px] flex flex-col'}>
+      <div className={'px-3 w-[150px] font-roboto lg:text-[15px] flex flex-col'}>
         <Link
           href={'/'}
           className={'py-2 px-4 hoverNav'}
