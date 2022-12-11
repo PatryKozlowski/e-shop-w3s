@@ -39,7 +39,7 @@ const Nav = ({ children }: Props): JSX.Element => {
     enter: {
       height: 0,
       opacity: 0,
-      transition: { duration: 0.2 },
+      transition: { duration: 0.1 },
       transitionEnd: {
         display: 'none'
       }
@@ -47,7 +47,7 @@ const Nav = ({ children }: Props): JSX.Element => {
     exit: {
       height: 'auto',
       opacity: 1,
-      transition: { duration: 0.2 },
+      transition: { duration: 0.1 },
       transitionEnd: {
         display: 'block'
       }

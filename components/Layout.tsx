@@ -14,12 +14,12 @@ interface Props {
 
 const Layout = ({ children }: Props): JSX.Element => {
   return (
-    <div className={'mx-w-full lg:max-w-container lg:mx-auto flex flex-col'}>
+    <div className={'mx-w-full h-full lg:max-w-container lg:mx-auto flex flex-col'}>
       <MobileHeader />
       <Nav>
         <Logo />
       </Nav>
-      <main className={'lg:w-[950px] lg:ml-[250px] lg:px-4 mt-24 lg:mt-0'}>
+      <main className={'lg:w-[950px] lg:ml-[250px] lg:px-4 mt-24 lg:mt-0 h-full'}>
         <Header />
 
         <Banner />
