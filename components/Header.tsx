@@ -1,5 +1,5 @@
-import { useRouter } from 'next/router'
 import React from 'react'
+import { useRouter } from 'next/router'
 import { MdShoppingCart, MdSearch } from 'react-icons/md'
 
 const Header = (): JSX.Element => {
@@ -16,10 +16,10 @@ const Header = (): JSX.Element => {
     }
   }, [])
   return (
-    <header className={'px-4 lg:px-0'}>
+    <header className={'px-4 lg:px-0 w-full'}>
       <div className={'flex items-center justify-between p-2'}>
         <p className={'my-6 text-2xl font-light'}>{headerTitleFromRoute(route)}</p>
-        <div className={'flex space-x-3 my-4'}>
+        <div className={'flex items-center space-x-3 my-4'}>
           <div className={`flex items-center  ${isShowSearchInput ? 'border border-black' : 'border-none'} transition-all ease-in-out duration-700`}>
             <input
               placeholder={'Search...'}
@@ -31,8 +31,8 @@ const Header = (): JSX.Element => {
               onClick={handleShowSearchInput}
             />
           </div>
-          <div className={'p-2 hover:scale-125 transition-all ease-in-out duration-200 cursor-pointer relative'}>
-            <span className={'absolute bottom-7 left-5 text-lg font-semibold'}>0</span>
+          <div className={'hover:scale-125 transition-all ease-in-out duration-200 cursor-pointer relative'}>
+            <span className={'absolute bottom-5 left-3 text-lg font-semibold'}>0</span>
             <MdShoppingCart size={30} />
           </div>
         </div>
