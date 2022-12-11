@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Jeans {
+  id          String        @id @unique @default(uuid())
+  name        String
+  description String
+  image       String
+  price       Float
+  sizeXS      JeansSizeXS[]
+  sizeS       JeansSizeS[]
+  sizeM       JeansSizeM[]
+  sizeL       JeansSizeL[]
+  sizeXL      JeansSizeXL[]
+  rating      JeansRating[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+}
+
+model JeansRating {
+  id          String  @id @unique @default(uuid())
+  rate        Float   @default(0)
+  count       Int     @default(0)
+  jeansRating Jeans?  @relation(fields: [jeansId], references: [id])
+  jeansId     String? @map("jeans_id")
+
+  @@map("jeans_rating")
+}
+
+model JeansSizeXS {
+  id        String   @id @unique @default(uuid())
+  size      String   @default("XS")
+  stock     Int      @default(0)
+  jeans     Jeans?   @relation(fields: [jeansId], references: [id])
+  jeansId   String?  @map("jeans_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("jeans_size_xs")
+}
+
+model JeansSizeS {
+  id        String   @id @unique @default(uuid())
+  size      String   @default("S")
+  stock     Int      @default(0)
+  jeans     Jeans?   @relation(fields: [jeansId], references: [id])
+  jeansId   String?  @map("jeans_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("jeans_size_s")
+}
+
+model JeansSizeM {
+  id        String   @id @unique @default(uuid())
+  size      String   @default("M")
+  stock     Int      @default(0)
+  jeans     Jeans?   @relation(fields: [jeansId], references: [id])
+  jeansId   String?  @map("jeans_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("jeans_size_m")
+}
+
+model JeansSizeL {
+  id        String   @id @unique @default(uuid())
+  size      String   @default("L")
+  stock     Int      @default(0)
+  jeans     Jeans?   @relation(fields: [jeansId], references: [id])
+  jeansId   String?  @map("jeans_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("jeans_size_l")
+}
+
+model JeansSizeXL {
+  id        String   @id @unique @default(uuid())
+  size      String   @default("XL")
+  stock     Int      @default(0)
+  jeans     Jeans?   @relation(fields: [jeansId], references: [id])
+  jeansId   String?  @map("jeans_id")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@map("jeans_size_xl")
+}
