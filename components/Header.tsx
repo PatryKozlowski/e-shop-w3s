@@ -19,7 +19,7 @@ const Header = (): JSX.Element => {
     <header className={'px-4 lg:px-0 w-full'}>
       <div className={'flex items-center justify-between p-2'}>
         <p className={'my-6 text-2xl font-light'}>{headerTitleFromRoute(route)}</p>
-        <div className={'flex items-center space-x-3 my-4'}>
+        <div className={'flex items-center space-x-4 my-4'}>
           <div className={`flex items-center  ${isShowSearchInput ? 'border border-black' : 'border-none'} transition-all ease-in-out duration-700`}>
             <input
               placeholder={'Search...'}
@@ -31,7 +31,7 @@ const Header = (): JSX.Element => {
               onClick={handleShowSearchInput}
             />
           </div>
-          <div className={'hover:scale-125 transition-all ease-in-out duration-200 cursor-pointer relative'}>
+          <div className={'lg:p-0 p-2hover:scale-125 transition-all ease-in-out duration-200 cursor-pointer relative'}>
             <span className={'absolute bottom-5 left-3 text-lg font-semibold'}>0</span>
             <MdShoppingCart size={30} />
           </div>
