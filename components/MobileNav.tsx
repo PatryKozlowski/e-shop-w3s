@@ -5,7 +5,7 @@ import { openMobileNav } from '../redux/mobileNavMenuSlice'
 import HamburegerButton from './HamburegerButton'
 import Logo from './Logo'
 
-const MobileHeader = (): JSX.Element => {
+const MobileNav = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const isOpenNavMenu = useAppSelector((state) => state.mobileNav.isMobileNavOpen)
   const handleOenMenu = React.useCallback(() => {
@@ -13,7 +13,7 @@ const MobileHeader = (): JSX.Element => {
   }, [dispatch, isOpenNavMenu])
 
   return (
-    <header className={'flex lg:hidden bg-black text-white fixed top-0 left-0 w-full z-50 mb-8'}>
+    <nav className={'flex lg:hidden bg-black text-white fixed top-0 left-0 w-full z-50 mb-8'}>
       <div className={'flex items-center justify-between w-full'}>
         < Logo />
         <div className={'px-4 py-4 mr-2'}>
@@ -24,8 +24,8 @@ const MobileHeader = (): JSX.Element => {
           />
         </div>
       </div>
-    </header >
+    </nav >
   )
 }
 
-export default MobileHeader
+export default MobileNav

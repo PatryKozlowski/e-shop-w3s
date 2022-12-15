@@ -1,21 +1,25 @@
 import Product from './Product/Product'
+import type Prisma from '@prisma/client'
 
-const Products = (): JSX.Element => {
+interface Props {
+  products: Prisma.Jeans[]
+}
+const Products = ({ products }: Props): JSX.Element => {
+  const numberOfProducts = products?.length
   return (
-    <div className={'flex flex-col px-4 lg:px-0 h-full'}>
-      <p className={'my-4'}>8 items</p>
+    <section className={'flex flex-col px-4 lg:px-0'}>
+      <p className={'my-4'}>{numberOfProducts} items</p>
       <div className={'grid lg:grid-cols-4 grid-cols-2 gap-x-9'}>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+        {
+          products?.map((product) => (
+            <Product
+              key={product.id}
+              {...product}
+            />
+          ))
+        }
       </div>
-    </div >
+    </section >
   )
 }
 

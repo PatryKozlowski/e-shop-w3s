@@ -1,8 +1,12 @@
-import { NextPage } from 'next'
 import Head from 'next/head'
+import { GetStaticProps } from 'next'
 import Products from '../../components/Products'
+import { PrismaClient } from '@prisma/client'
+import type { ProductsProps } from '../../types'
 
-const Jeans: NextPage = () => {
+const prisma = new PrismaClient()
+
+const Jeans = ({ products }: ProductsProps): React.ReactElement => {
   return (
     <>
       <Head>
@@ -16,9 +20,19 @@ const Jeans: NextPage = () => {
           href={'/favicon.ico'}
         />
       </Head>
-      <Products />
+      <Products products={products}/>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const products = await prisma.jeans.findMany()
+
+  return {
+    props: {
+      products: JSON.parse(JSON.stringify(products))
+    }
+  }
 }
 
 export default Jeans

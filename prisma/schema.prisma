@@ -11,11 +11,13 @@ datasource db {
 }
 
 model Jeans {
-  id          String        @id @unique @default(uuid())
+  id          String        @id @default(uuid())
   name        String
   description String
   image       String
   price       Float
+  type        JeansType @default(normal)
+  info        JeansInfo @default(none)
   sizeXS      JeansSizeXS[]
   sizeS       JeansSizeS[]
   sizeM       JeansSizeM[]
@@ -24,6 +26,22 @@ model Jeans {
   rating      JeansRating[]
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now())
+
+  @@unique([id])
+}
+
+enum JeansType {
+  normal
+  skinny
+  relaxed
+  bootcut
+  straight
+}
+
+enum JeansInfo {
+  none
+  new
+  sale
 }
 
 model JeansRating {

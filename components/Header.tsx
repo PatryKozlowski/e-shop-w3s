@@ -9,16 +9,15 @@ const Header = (): JSX.Element => {
   const headerTitleFromRoute = React.useCallback((routeName: string): string => {
     const pageName = routeName.split('/')
 
-    if (pageName.length > 2) {
+    if (pageName.length > 3) {
       return pageName[2]?.charAt(0).toUpperCase() + pageName[2]?.slice(1)
     } else {
-      return pageName[1].charAt(0).toUpperCase() + pageName[1].slice(1)
+      return pageName[1]?.charAt(0).toUpperCase() + pageName[1].slice(1)
     }
   }, [])
 
   const isNotHomeRoute = headerTitleFromRoute(route) === ''
 
-  console.log(isNotHomeRoute)
   return (
     <header className={'px-4 lg:px-0 w-full'}>
       <div className={`flex items-center p-2 ${isNotHomeRoute ? 'justify-end' : 'justify-between'} `}>

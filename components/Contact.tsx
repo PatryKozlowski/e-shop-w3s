@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { MdLocationOn, MdPhone, MdEmail, MdCreditCard } from 'react-icons/md'
 import { FaCcAmex, FaFacebookSquare, FaInstagram, FaSnapchatSquare, FaPinterestP, FaTwitter, FaLinkedin } from 'react-icons/fa'
-import { aboutItems as About, storeItems as Store, paymentItems as Payment, socialItems as Social } from '../types'
+import type { aboutItems as About, storeItems as Store, paymentItems as Payment, socialItems as Social } from '../types'
 
 const Contact = (): JSX.Element => {
   const aboutItems: About[] = [

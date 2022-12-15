@@ -1,23 +1,41 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import Sale from './Sale'
+import New from './New'
+import type { ProductsProps } from '../../types'
 
-const Product = (): JSX.Element => {
+const Product = ({ id, name, image, price, info }: ProductsProps): JSX.Element => {
   return (
-    <div className={'flex flex-col'}>
-      <div className={'relative'}>
-        <Sale />
-      </div>
-      <Image
-        src={'https://www.w3schools.com/w3images/jeans1.jpg'}
-        alt={'Product image'}
-        width={'0'}
-        height={'0'}
-        sizes={'100vw'}
-        className={'w-full h-auto'}
-      />
+    <div className={'flex flex-col hover:scale-105 transition ease-in-out duration-300'}>
+      {
+        info !== 'none' ?
+          <div className={'relative'}>
+            {
+              info === 'sale' ?
+                <Sale />
+                :
+                info === 'new' ?
+                  <New />
+                  :
+                  null
+            }
+          </div>
+          :
+          null
+      }
+      <Link href={`jeans/${id}`}>
+        <Image
+          src={image}
+          alt={'Product image'}
+          width={'0'}
+          height={'0'}
+          sizes={'100vw'}
+          className={'w-full h-auto'}
+        />
+      </Link>
       <div className={'my-4'}>
-        <p>Ripped Skinny Jeans</p>
-        <p>$24.99</p>
+        <p>{name}</p>
+        <p>${price}</p>
       </div>
     </div>
   )
