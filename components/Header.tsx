@@ -1,11 +1,15 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { MdShoppingCart, MdSearch } from 'react-icons/md'
+import { MdSearch } from 'react-icons/md'
+import { useAppSelector } from '../hooks/useAppSelector'
+import ShopingBucket from './ShopingBucket'
+import Cart from './Cart'
 
 const Header = (): JSX.Element => {
   const [isShowSearchInput, setShowSeatchInput] = React.useState<boolean>(false)
   const handleShowSearchInput = React.useCallback(() => { setShowSeatchInput(!isShowSearchInput) }, [isShowSearchInput])
   const { route } = useRouter()
+  const isOpenCart = useAppSelector((state) => state.cart.isCartOpen)
   const headerTitleFromRoute = React.useCallback((routeName: string): string => {
     const pageName = routeName.split('/')
 
@@ -17,6 +21,14 @@ const Header = (): JSX.Element => {
   }, [])
 
   const isNotHomeRoute = headerTitleFromRoute(route) === ''
+
+  React.useEffect(() => {
+    if (isOpenCart) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpenCart])
 
   return (
     <header className={'px-4 lg:px-0 w-full'}>
@@ -39,11 +51,14 @@ const Header = (): JSX.Element => {
               onClick={handleShowSearchInput}
             />
           </div>
-          <div className={'hover:scale-125 transition-all ease-in-out duration-200 cursor-pointer relative'}>
-            <span className={'absolute bottom-5 left-3 text-lg font-semibold'}>0</span>
-            <MdShoppingCart size={30} />
-          </div>
+          <ShopingBucket />
         </div>
+      </div>
+
+      {/* Cart  */}
+
+      <div className={'h-full'}>
+        <Cart />
       </div>
     </header >
   )

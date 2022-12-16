@@ -1,27 +1,43 @@
 import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { GetStaticPaths, GetStaticProps } from 'next'
 import { PrismaClient } from '@prisma/client'
 import { useForm } from 'react-hook-form'
+import { MdAddShoppingCart } from 'react-icons/md'
+import type { GetStaticPaths, GetStaticProps } from 'next'
+import type { SubmitHandler } from 'react-hook-form'
 import type { ProductProps } from '../../types'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { addItemToCart } from '../../redux/cartSlice'
+
+interface ProductData {
+  id: string
+  name: string
+  description: string
+  image: string
+  price: number
+  createdAt: Date
+  updatedAt: Date
+  size: string
+  quantity: number
+}
 
 const prisma = new PrismaClient()
 
-const JeansOnePage = ({ product }: ProductProps): React.ReactElement => {
+const JeansOnePage = ({ product, sizes }: ProductProps): React.ReactElement => {
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      productId: product.id,
-      size: ''
+      ...product,
+      size: '',
+      quantity: 0
     }
   })
+  const dispatch = useAppDispatch()
 
-  const handleProduct = (data: any): void => {
+  const handleProduct: SubmitHandler<ProductData> = (data) => {
     console.log(data)
+    dispatch(addItemToCart(data))
   }
-
-  const { sizeXS, sizeS, sizeM, sizeL, sizeXL } = product
-  const sizes = [...sizeXS, ...sizeS, ...sizeM, ...sizeL, ...sizeXL]
 
   return (
     <>
@@ -75,7 +91,7 @@ const JeansOnePage = ({ product }: ProductProps): React.ReactElement => {
                         htmlFor={size?.size}
                         className={'p-4 border border-black w-14 h-14 text-center peer-checked:text-blue-800 peer-checked:border-2 peer-checked:font-semibold hover:text-gray-600 hover:bg-gray-100 hover:scale-105 transition ease-in-out duration-300 cursor-pointer'}
                       >
-                        {size.size}
+                        {size?.size}
                       </label>
                       <span className={''}>{size?.stock}</span>
                     </div>
@@ -88,12 +104,13 @@ const JeansOnePage = ({ product }: ProductProps): React.ReactElement => {
                 :
                 <button
                   type={'submit'}
-                  className={'mt-5 border border-black p-6 w-full hover:text-gray-600 hover:font-semibold hover:bg-gray-300 transition ease-in-out duration-300 cursor-pointer'}
+                  className={'flex justify-center items-center space-x-2 mt-5 border border-black p-6 w-full hover:text-gray-600 hover:font-semibold hover:bg-gray-300 transition ease-in-out duration-300 cursor-pointer'}
                 >
                   Add to cart &nbsp;
                   <span className={'font-semibold'}>
                     ${product?.price}
                   </span>
+                  <MdAddShoppingCart size={30}/>
                 </button>
             }
           </form>
@@ -110,20 +127,44 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const product = await prisma.jeans.findUnique({
     where: {
       id
-    },
-    include: {
-      sizeXS: true,
-      sizeS: true,
-      sizeM: true,
-      sizeL: true,
-      sizeXL: true,
-      rating: true
     }
+  })
+  const sizeXS = await prisma.jeansSizeXS.findUnique({
+    where: {
+      jeansId: id
+    }
+  })
+  const sizeS = await prisma.jeansSizeS.findUnique({
+    where: {
+      jeansId: id
+    }
+  })
+  const sizeM = await prisma.jeansSizeM.findUnique({
+    where: {
+      jeansId: id
+    }
+  })
+  const sizeL = await prisma.jeansSizeL.findUnique({
+    where: {
+      jeansId: id
+    }
+  })
+  const sizeXL = await prisma.jeansSizeXL.findUnique({
+    where: {
+      jeansId: id
+    }
+  })
+
+  const sizesArray = [sizeXS, sizeS, sizeM, sizeL, sizeXL]
+
+  const sizes = sizesArray.filter(element => {
+    return element !== null
   })
 
   return {
     props: {
-      product: JSON.parse(JSON.stringify(product))
+      product: JSON.parse(JSON.stringify(product)),
+      sizes: JSON.parse(JSON.stringify(sizes))
     }
   }
 }

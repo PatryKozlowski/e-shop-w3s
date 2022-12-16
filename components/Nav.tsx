@@ -1,9 +1,9 @@
-import Link from 'next/link'
 import React, { ReactNode } from 'react'
-import { MdArrowDropDown, MdArrowRight } from 'react-icons/md'
+import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
 import useWindowDimensions from '../hooks/useWindowDimensions'
 import { useAppSelector } from '../hooks/useAppSelector'
+import { MdArrowDropDown, MdArrowRight } from 'react-icons/md'
 
 interface Props {
   children: ReactNode

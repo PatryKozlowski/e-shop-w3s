@@ -2,9 +2,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Sale from './Sale'
 import New from './New'
-import type { ProductsProps } from '../../types'
+import type Prisma from '@prisma/client'
 
-const Product = ({ id, name, image, price, info }: ProductsProps): JSX.Element => {
+interface Props {
+  id: string
+  name: string
+  image: string
+  price: number
+  info: Prisma.JeansInfo
+}
+
+const Product = ({ id, name, image, price, info }: Props): JSX.Element => {
   return (
     <div className={'flex flex-col hover:scale-105 transition ease-in-out duration-300'}>
       {

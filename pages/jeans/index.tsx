@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import { GetStaticProps } from 'next'
 import Products from '../../components/Products'
 import { PrismaClient } from '@prisma/client'
+import type { GetStaticProps } from 'next'
 import type { ProductsProps } from '../../types'
 
 const prisma = new PrismaClient()

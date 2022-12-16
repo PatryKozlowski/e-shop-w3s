@@ -59,7 +59,7 @@ model JeansSizeXS {
   size      String   @default("XS")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id")
+  jeansId   String?  @map("jeans_id") @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -71,7 +71,7 @@ model JeansSizeS {
   size      String   @default("S")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id")
+  jeansId   String?  @map("jeans_id") @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -83,7 +83,7 @@ model JeansSizeM {
   size      String   @default("M")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id")
+  jeansId   String?  @map("jeans_id") @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -95,7 +95,7 @@ model JeansSizeL {
   size      String   @default("L")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id")
+  jeansId   String?  @map("jeans_id") @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -107,7 +107,7 @@ model JeansSizeXL {
   size      String   @default("XL")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id")
+  jeansId   String?  @map("jeans_id") @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 

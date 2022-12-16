@@ -48,13 +48,17 @@ export interface ProductProps {
     description: string
     image: string
     price: number
+    info: Prisma.JeansInfo
+    type: Prisma.JeansType
     createdAt: Date
     updatedAt: Date
-    sizeXS: Prisma.JeansSizeXS[]
-    sizeS: Prisma.JeansSizeS[]
-    sizeM: Prisma.JeansSizeM[]
-    sizeL: Prisma.JeansSizeL[]
-    sizeXL: Prisma.JeansSizeXL[]
-    rating: Prisma.JeansRating[]
   }
+  sizes: Array<{
+    id: string
+    jeansId: string
+    size: string
+    stock: number
+    createdAt: Date
+    updatedAt: Date
+  }>
 }
