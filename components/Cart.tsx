@@ -2,7 +2,9 @@ import React from 'react'
 import { MdClose, MdShoppingBag } from 'react-icons/md'
 import { useAppDispatch } from '../hooks/useAppDispatch'
 import { useAppSelector } from '../hooks/useAppSelector'
+import { openAccountMenu } from '../redux/accountMenuSlice'
 import { openCart } from '../redux/cartSlice'
+import { openMobileNav } from '../redux/mobileNavMenuSlice'
 import CartItem from './CartItem'
 
 const Cart = (): JSX.Element => {
@@ -10,9 +12,19 @@ const Cart = (): JSX.Element => {
   const isOpenCart = useAppSelector((state) => state.cart.isCartOpen)
   const productsInCart = useAppSelector((state) => state.cart.productsInCart)
   const totalPrice = useAppSelector((state) => state.cart.totalPrice)
+  const isOpenNavMenu = useAppSelector((state) => state.mobileNav.isMobileNavOpen)
+  const isOpenAccountMenu = useAppSelector((state) => state.accountMenu.isAccountMenuOpen)
   const handleOpenCart = React.useCallback(() => {
+    if (isOpenNavMenu) {
+      dispatch(openMobileNav(!isOpenNavMenu))
+    }
+
+    if (isOpenAccountMenu) {
+      dispatch(openAccountMenu(!isOpenAccountMenu))
+    }
+
     dispatch(openCart(!isOpenCart))
-  }, [dispatch, isOpenCart])
+  }, [dispatch, isOpenCart, isOpenNavMenu, isOpenAccountMenu])
   return (
     <div className={`fixed top-15 bottom-0 right-0 z-50 w-full lg:w-1/2 h-full bg-white ${!isOpenCart ? 'translate-x-full' : 'translate-x-0'}  transition ease-in-out duration-300`}>
       <div className={'flex flex-col h-full'}>

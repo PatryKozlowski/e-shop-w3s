@@ -1,6 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {
+interface InitialProps {
+  isMobileNavOpen: boolean
+}
+
+const initialState: InitialProps = {
   isMobileNavOpen: false
 }
 

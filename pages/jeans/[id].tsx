@@ -9,6 +9,7 @@ import type { SubmitHandler } from 'react-hook-form'
 import type { ProductProps } from '../../types'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { addItemToCart } from '../../redux/cartSlice'
+import { toast } from 'react-toastify'
 
 interface ProductData {
   id: string
@@ -35,8 +36,17 @@ const JeansOnePage = ({ product, sizes }: ProductProps): React.ReactElement => {
   const dispatch = useAppDispatch()
 
   const handleProduct: SubmitHandler<ProductData> = (data) => {
-    console.log(data)
     dispatch(addItemToCart(data))
+    toast.success('Item added to cart successfully', {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: 'light'
+    })
   }
 
   return (

@@ -4,7 +4,7 @@ import { useAppDispatch } from '../hooks/useAppDispatch'
 import { useAppSelector } from '../hooks/useAppSelector'
 import { openCart } from '../redux/cartSlice'
 
-const ShopingBucket = (): JSX.Element => {
+const ShopingCart = (): JSX.Element => {
   const dispatch = useAppDispatch()
   const isOpenCart = useAppSelector((state) => state.cart.isCartOpen)
   const itemInCart = useAppSelector((state) => state.cart.productsInCart)
@@ -36,4 +36,4 @@ const ShopingBucket = (): JSX.Element => {
   )
 }
 
-export default ShopingBucket
+export default ShopingCart

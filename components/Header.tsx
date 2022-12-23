@@ -2,8 +2,10 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { MdSearch } from 'react-icons/md'
 import { useAppSelector } from '../hooks/useAppSelector'
-import ShopingBucket from './ShopingBucket'
+import ShopingCart from './ShopingCart'
 import Cart from './Cart'
+import AccountIcon from './AccountIcon'
+import AccountMenu from './AccountMenu'
 
 const Header = (): JSX.Element => {
   const [isShowSearchInput, setShowSeatchInput] = React.useState<boolean>(false)
@@ -12,7 +14,6 @@ const Header = (): JSX.Element => {
   const isOpenCart = useAppSelector((state) => state.cart.isCartOpen)
   const headerTitleFromRoute = React.useCallback((routeName: string): string => {
     const pageName = routeName.split('/')
-
     if (pageName.length > 3) {
       return pageName[2]?.charAt(0).toUpperCase() + pageName[2]?.slice(1)
     } else {
@@ -20,7 +21,7 @@ const Header = (): JSX.Element => {
     }
   }, [])
 
-  const isNotHomeRoute = headerTitleFromRoute(route) === ''
+  const isOnlyCategoryRoute = headerTitleFromRoute(route) === '' || headerTitleFromRoute(route) === 'Login' || headerTitleFromRoute(route) === 'Register'
 
   React.useEffect(() => {
     if (isOpenCart) {
@@ -32,28 +33,38 @@ const Header = (): JSX.Element => {
 
   return (
     <header className={'px-4 lg:px-0 w-full'}>
-      <div className={`flex items-center p-2 ${isNotHomeRoute ? 'justify-end' : 'justify-between'} `}>
+      <div className={`flex items-center p-2 ${isOnlyCategoryRoute ? 'justify-end' : 'justify-between'} `}>
         {
-          !isNotHomeRoute ?
-            <p className={'my-6 text-2xl font-light'}>{headerTitleFromRoute(route)}</p>
+          !isOnlyCategoryRoute ?
+            <p className={'ml-[250px] my-6 text-2xl font-light'}>{headerTitleFromRoute(route)}</p>
             :
             null
         }
         <div className={'flex items-center space-x-4 my-4'}>
-          <div className={`hidden lg:flex items-center  ${isShowSearchInput ? 'border border-black' : 'border-none'} transition-all ease-in-out duration-700`}>
-            <input
-              placeholder={'Search...'}
-              className={`p-2 border-none ${isShowSearchInput ? 'opacity-100 focus:outline-none' : 'opacity-0'} transition-all ease-in-out duration-700`}
-            />
-            <MdSearch
-              size={30}
-              className={'z-5 cursor-pointer'}
-              onClick={handleShowSearchInput}
-            />
-          </div>
-          <ShopingBucket />
+          {
+            !isOnlyCategoryRoute ?
+              <div className={`hidden lg:flex items-center  ${isShowSearchInput ? 'border border-black' : 'border-none'} transition-all ease-in-out duration-700`}>
+                <input
+                  placeholder={'Search...'}
+                  className={`p-2 border-none ${isShowSearchInput ? 'opacity-100 focus:outline-none' : 'opacity-0'} transition-all ease-in-out duration-700`}
+                />
+                <MdSearch
+                  size={30}
+                  className={'z-5 hover:scale-110 tranistion ease-in-out duration-300 cursor-pointer'}
+                  onClick={handleShowSearchInput}
+                />
+              </div>
+              :
+              null
+          }
+          <AccountIcon />
+          <ShopingCart />
         </div>
       </div>
+
+      {/* Account menu */}
+
+      <AccountMenu />
 
       {/* Cart  */}
 

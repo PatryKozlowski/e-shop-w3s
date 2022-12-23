@@ -1,7 +1,9 @@
 import React from 'react'
 import '../styles/globals.css'
+import 'react-toastify/dist/ReactToastify.css'
 import type { AppProps } from 'next/app'
 import Layout from '../components/Layout'
+import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
 import { store } from '../redux/store'
 import { Hydrate, QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -15,6 +17,7 @@ const App = ({ Component, pageProps }: AppProps): JSX.Element => {
         <Provider store={store}>
           <Layout>
             <Component {...pageProps} />
+            <ToastContainer />
           </Layout>
         </Provider>
       </Hydrate>
