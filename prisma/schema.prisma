@@ -16,8 +16,8 @@ model Jeans {
   description String
   image       String
   price       Float
-  type        JeansType @default(normal)
-  info        JeansInfo @default(none)
+  type        JeansType     @default(normal)
+  info        JeansInfo     @default(none)
   sizeXS      JeansSizeXS[]
   sizeS       JeansSizeS[]
   sizeM       JeansSizeM[]
@@ -59,7 +59,7 @@ model JeansSizeXS {
   size      String   @default("XS")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id") @unique
+  jeansId   String?  @unique @map("jeans_id")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -71,7 +71,7 @@ model JeansSizeS {
   size      String   @default("S")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id") @unique
+  jeansId   String?  @unique @map("jeans_id")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -83,7 +83,7 @@ model JeansSizeM {
   size      String   @default("M")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id") @unique
+  jeansId   String?  @unique @map("jeans_id")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -95,7 +95,7 @@ model JeansSizeL {
   size      String   @default("L")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id") @unique
+  jeansId   String?  @unique @map("jeans_id")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
@@ -107,9 +107,66 @@ model JeansSizeXL {
   size      String   @default("XL")
   stock     Int      @default(0)
   jeans     Jeans?   @relation(fields: [jeansId], references: [id])
-  jeansId   String?  @map("jeans_id") @unique
+  jeansId   String?  @unique @map("jeans_id")
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
   @@map("jeans_size_xl")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String        @id @default(cuid())
+  name          String?
+  email         String?       @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  address       UsersAdress[]
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model UsersAdress {
+  id     String @id @default(cuid())
+  userId String @unique
+  name   String
+  street String
+  city   String
+  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { PrismaClient } from '@prisma/client'
 import { useForm } from 'react-hook-form'
 import { MdAddShoppingCart } from 'react-icons/md'
 import type { GetStaticPaths, GetStaticProps } from 'next'
@@ -10,6 +9,7 @@ import type { ProductProps } from '../../types'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { addItemToCart } from '../../redux/cartSlice'
 import { toast } from 'react-toastify'
+import prisma from '../../lib/prisma'
 
 interface ProductData {
   id: string
@@ -22,8 +22,6 @@ interface ProductData {
   size: string
   quantity: number
 }
-
-const prisma = new PrismaClient()
 
 const JeansOnePage = ({ product, sizes }: ProductProps): React.ReactElement => {
   const { register, handleSubmit } = useForm({

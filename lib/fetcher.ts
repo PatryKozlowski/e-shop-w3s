@@ -11,7 +11,7 @@ export const fetcher = async <returnType>(endpoint: string, { method, body, conf
     ...(body && { body: JSON.stringify(body) })
   })
 
-  if (!response.ok) throw new Error('Something went wrong during fetching!')
+  // if (!response.ok) throw new Error('Something went wrong during fetching!')
 
   const data = await response.json()
 

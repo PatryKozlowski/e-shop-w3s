@@ -1,3 +1,4 @@
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { BiLogOut } from 'react-icons/bi'
 import { useAppSelector } from '../hooks/useAppSelector'
@@ -17,7 +18,10 @@ const AccountMenu = (): JSX.Element => {
           className={'p-2 hover:scale-105 transition ease-in-out duration-300'}
         >Orders
         </Link>
-        <button className={'p-2 flex items-center justify-center cursor-pointer hover:scale-105 transition ease-in-out duration-300'}>
+        <button
+          className={'p-2 flex items-center justify-center cursor-pointer hover:scale-105 transition ease-in-out duration-300'}
+          onClick={async () => await signOut()}
+        >
           Log out
           <BiLogOut size={30}/>
         </button>

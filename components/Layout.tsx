@@ -24,7 +24,7 @@ const Layout = ({ children }: Props): JSX.Element => {
       <Header />
       <main className={'lg:w-[950px] lg:ml-[250px] lg:px-4 mt-24 lg:mt-0'}>
 
-        { route === '/login' || route === '/register'
+        { route === '/login' || route === '/register' || route === '/profile'
           ?
             <>
               { children }
@@ -40,7 +40,7 @@ const Layout = ({ children }: Props): JSX.Element => {
             </>
       }
       </main>
-      { route === '/login' || route === '/register' ? null : <Footer />}
+      { route === '/login' || route === '/register' || route === '/profile' ? null : <Footer />}
     </div>
   )
 }

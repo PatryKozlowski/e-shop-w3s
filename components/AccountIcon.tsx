@@ -5,10 +5,11 @@ import { useAppSelector } from '../hooks/useAppSelector'
 import { openAccountMenu } from '../redux/accountMenuSlice'
 import { openMobileNav } from '../redux/mobileNavMenuSlice'
 import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
 const AccountIcon = (): JSX.Element => {
+  const { data: session } = useSession()
   const router = useRouter()
-  const isLoggin = true
   const dispatch = useAppDispatch()
   const isOpenAccountMenu = useAppSelector((state) => state.accountMenu.isAccountMenuOpen)
   const isOpenNavMenu = useAppSelector((state) => state.mobileNav.isMobileNavOpen)
@@ -25,7 +26,7 @@ const AccountIcon = (): JSX.Element => {
     <MdSupervisorAccount
       size={36}
       className={'mr-2 hover:scale-110 tranistion ease-in-out duration-300 cursor-pointer'}
-      onClick={isLoggin ? handleOpenAccountMenu : goToSignInPage}
+      onClick={session ? handleOpenAccountMenu : goToSignInPage}
     />
   )
 }

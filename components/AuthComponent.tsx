@@ -7,11 +7,19 @@ import { FcGoogle } from 'react-icons/fc'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { EMAIL_ERROR_VALIDATION, EMAIL_REQUIRED_VALIDATION, PASSWORD_ERROR_VALIDATION, PASSWORD_REQUIRED_VALIDATION, REPEAT_PASSWORD_ERROR_VALIDATION } from '../lib/formValidation'
 import isEmail from 'validator/lib/isEmail'
+import { signIn } from 'next-auth/react'
+import { fetcher } from '../lib/fetcher'
+import { toast } from 'react-toastify'
 
 interface AuthComponentForm {
   email: string
   password: string
   repeatPassword: string
+}
+
+interface ResponseProps {
+  status: number
+  message: string
 }
 
 const AuthComponent = (): JSX.Element => {
@@ -20,15 +28,56 @@ const AuthComponent = (): JSX.Element => {
 
   const handleShowPassword = React.useCallback(() => { setShowPassword(!isShowPassword) }, [isShowPassword])
   const handleShowRepeatPassword = React.useCallback(() => { setShowRepeatPassword(!isShowRepeatPassword) }, [isShowRepeatPassword])
+  // const session = useSession()
 
-  const { route } = useRouter()
+  const router = useRouter()
+  const { route } = router
   const methods = useForm<AuthComponentForm>({ shouldUnregister: true })
-  const { register, handleSubmit, watch, reset, unregister, formState: { errors } } = methods
+  const { register, handleSubmit, watch, unregister, formState: { errors } } = methods
 
-  const handleSubmitForm: SubmitHandler<AuthComponentForm> = (data) => {
-    console.log(data)
-    reset()
-  }
+  const handleSignIn: SubmitHandler<AuthComponentForm> = React.useCallback(async (data) => {
+    await signIn('credentials', {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+      callbackUrl: '/'
+    })
+  }, [])
+
+  const handleSignUp: SubmitHandler<AuthComponentForm> = React.useCallback(async (data) => {
+    try {
+      const response: ResponseProps = await fetcher('/api/auth/signup', {
+        method: 'POST',
+        body: data
+      })
+      if (response.status === 200) {
+        await signIn('credentials', {
+          redirect: false,
+          email: data.email,
+          password: data.password,
+          callbackUrl: '/'
+        })
+      } else {
+        toast.error(response.message, {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: 'light'
+        })
+      }
+    } catch (error) {
+    }
+  }, [])
+
+  // React.useEffect(() => {
+  //   if (session.status === 'authenticated') {
+  //     void router.push('/')
+  //   }
+  // }, [router, session.status])
 
   const emailInput = register('email', {
     required: {
@@ -45,11 +94,6 @@ const AuthComponent = (): JSX.Element => {
     minLength: {
       value: 8,
       message: PASSWORD_ERROR_VALIDATION
-    },
-    pattern: {
-      value: /[a-z]+[A-Z]+[0-9]+[^a-zA-Z0-9]/,
-      // value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-      message: 'invalid email address'
     }
   })
 
@@ -62,13 +106,6 @@ const AuthComponent = (): JSX.Element => {
       value: 8,
       message: PASSWORD_ERROR_VALIDATION
     },
-    // pattern: {
-    //   value: /[a-z]+[A-Z]+[0-9]+[^a-zA-Z0-9]/,
-    //   message: 'invalid email address'
-    // },
-    // validate: (repeatPassword) => {
-    //   repeatPassword === watch('password') || REPEAT_PASSWORD_ERROR_VALIDATION
-    // }
     validate: (match) => {
       const password = watch('password')
       return match === password || REPEAT_PASSWORD_ERROR_VALIDATION
@@ -85,7 +122,7 @@ const AuthComponent = (): JSX.Element => {
     <div className={'flex flex-col items-center my-4'}>
       <form
         className={'w-full flex flex-col justify-center items-center mb-4'}
-        onSubmit={handleSubmit(handleSubmitForm)}
+        onSubmit={route === '/login' ? handleSubmit(handleSignIn) : handleSubmit(handleSignUp)}
       >
         <div className={'flex items-center justify-center mb-4 space-x-2'}>
           <MdSupervisorAccount size={50}/>
@@ -197,7 +234,7 @@ const AuthComponent = (): JSX.Element => {
       </form>
       <button
         className={'flex items-center justify-center w-1/2 space-x-2 p-2 hover:border transition-all ease-in-out duration-200'}
-        onClick={() => console.log('loguje google')}
+        onClick={async () => await signIn('google', { callbackUrl: 'http://localhost:3000' })}
       >
         <FcGoogle size={30}/>
         Sign in With Google

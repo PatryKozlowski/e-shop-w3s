@@ -1,10 +1,8 @@
 import Head from 'next/head'
 import Products from '../../components/Products'
-import { PrismaClient } from '@prisma/client'
 import type { GetStaticProps } from 'next'
 import type { ProductsProps } from '../../types'
-
-const prisma = new PrismaClient()
+import prisma from '../../lib/prisma'
 
 const Jeans = ({ products }: ProductsProps): React.ReactElement => {
   return (
