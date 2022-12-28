@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { MdAddShoppingCart } from 'react-icons/md'
 import type { GetStaticPaths, GetStaticProps } from 'next'
 import type { SubmitHandler } from 'react-hook-form'
-import type { ProductProps } from '../../types'
+import type { ProductProps } from '../../types/index'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import { addItemToCart } from '../../redux/cartSlice'
 import { toast } from 'react-toastify'
@@ -101,7 +101,7 @@ const JeansOnePage = ({ product, sizes }: ProductProps): React.ReactElement => {
                       >
                         {size?.size}
                       </label>
-                      <span className={''}>{size?.stock}</span>
+                      <span>{size?.stock}</span>
                     </div>
                   </div>
                 ))
@@ -166,7 +166,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const sizesArray = [sizeXS, sizeS, sizeM, sizeL, sizeXL]
 
   const sizes = sizesArray.filter(element => {
-    return element !== null
+    console.log(element)
+    return element !== null && element?.stock > 0
   })
 
   return {

@@ -1,4 +1,4 @@
-import { ProductsProps } from '../../../types'
+import type { ProductsProps } from '../../../types/index'
 import { fetcher } from '../../fetcher'
 
 export const getJeans = async (): Promise<ProductsProps> => {

@@ -33,16 +33,33 @@ const AuthComponent = (): JSX.Element => {
   const router = useRouter()
   const { route } = router
   const methods = useForm<AuthComponentForm>({ shouldUnregister: true })
-  const { register, handleSubmit, watch, unregister, formState: { errors } } = methods
+  const { register, handleSubmit, reset, watch, unregister, formState: { errors } } = methods
 
   const handleSignIn: SubmitHandler<AuthComponentForm> = React.useCallback(async (data) => {
-    await signIn('credentials', {
-      redirect: false,
-      email: data.email,
-      password: data.password,
-      callbackUrl: '/'
-    })
-  }, [])
+    try {
+      const response = await signIn('credentials', {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        callbackUrl: '/'
+      })
+      if (response?.error) {
+        toast.error(response.error, {
+          position: 'top-center',
+          autoClose: 2000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: 'light'
+        })
+      }
+      reset()
+    } catch (error) {
+      console.log(error)
+    }
+  }, [reset])
 
   const handleSignUp: SubmitHandler<AuthComponentForm> = React.useCallback(async (data) => {
     try {
@@ -57,6 +74,7 @@ const AuthComponent = (): JSX.Element => {
           password: data.password,
           callbackUrl: '/'
         })
+        reset()
       } else {
         toast.error(response.message, {
           position: 'top-center',
@@ -71,7 +89,7 @@ const AuthComponent = (): JSX.Element => {
       }
     } catch (error) {
     }
-  }, [])
+  }, [reset])
 
   // React.useEffect(() => {
   //   if (session.status === 'authenticated') {
@@ -128,52 +146,48 @@ const AuthComponent = (): JSX.Element => {
           <MdSupervisorAccount size={50}/>
           <p className={'text-3xl'}>{route === '/login' ? 'Sign in' : 'Create an account'}</p>
         </div>
-        <div className={'w-1/2 flex flex-col space-y-2'}>
-          <div>
-            <input
-              className={`p-4 border-2 w-full ${errors.email ? 'border-red-500 outline-red-500' : ''}`}
-              placeholder={'E-mail'}
-              {...emailInput}
-            />
-            {
+        <div className={'w-10/12 lg:w-1/2 flex flex-col space-y-2'}>
+          <input
+            className={`p-4 border-2 w-full ${errors.email ? 'border-red-500 outline-red-500' : ''}`}
+            placeholder={'E-mail'}
+            {...emailInput}
+          />
+          {
             errors.email?.message ?
               <p className={'p-2 text-red-500'}>{errors.email?.message }</p>
               :
               null
           }
-          </div>
-          <div>
-            <div className={`flex items-center border-2 ${errors.repeatPassword ? 'border-red-500 outline-red-500' : ''}`}>
-              <input
-                className={'p-4 border-none outline-none w-full'}
-                placeholder={'Password'}
-                type={isShowPassword ? 'text' : 'password'}
-                {...passwordInput}
-              />
+          <div className={`flex items-center border-2 ${errors.repeatPassword ? 'border-red-500 outline-red-500' : ''}`}>
+            <input
+              className={'p-4 border-none outline-none w-full'}
+              placeholder={'Password'}
+              type={isShowPassword ? 'text' : 'password'}
+              {...passwordInput}
+            />
 
-              {
-            isShowPassword ?
-              <BiHide
-                size={30}
-                className={'mr-2 cursor-pointer hover:scale-105 transition ease-in-out duration-300'}
-                onClick={handleShowPassword}
-              />
-              :
-              <BiShow
-                size={30}
-                className={'mr-2 cursor-pointer hover:scale-105 transition ease-in-out duration-300'}
-                onClick={handleShowPassword}
-              />
-
-            }
-            </div>
             {
+                isShowPassword ?
+                  <BiHide
+                    size={30}
+                    className={'mr-2 cursor-pointer hover:scale-105 transition ease-in-out duration-300'}
+                    onClick={handleShowPassword}
+                  />
+                  :
+                  <BiShow
+                    size={30}
+                    className={'mr-2 cursor-pointer hover:scale-105 transition ease-in-out duration-300'}
+                    onClick={handleShowPassword}
+                  />
+
+              }
+          </div>
+          {
             errors.password?.message ?
               <p className={'p-2 text-red-500'}>{errors.password?.message}</p>
               :
               null
             }
-          </div>
           {
             route === '/register' ?
               <div>
@@ -215,14 +229,23 @@ const AuthComponent = (): JSX.Element => {
             <MdLogin size={26}/>
           </button>
         </div>
-        {
+        <div className={'flex items-center flex-col'}>
+          <Link
+            href={'/user/forgot-password'}
+            className={'text-sm underline mt-4'}
+          >
+            Password recovery
+          </Link>
+          {
           route === '/login' ?
-            <Link
-              href={'/register'}
-              className={'text-sm underline mt-4'}
-            >
-              Do you need an account?
-            </Link>
+            <>
+              <Link
+                href={'/register'}
+                className={'text-sm underline mt-4'}
+              >
+                Do you need an account?
+              </Link>
+            </>
             :
             <Link
               href={'/login'}
@@ -231,9 +254,10 @@ const AuthComponent = (): JSX.Element => {
               I want to log in
             </Link>
         }
+        </div>
       </form>
       <button
-        className={'flex items-center justify-center w-1/2 space-x-2 p-2 hover:border transition-all ease-in-out duration-200'}
+        className={'flex items-center justify-center w-1/2 space-x-2 p-2 hover:shadow transition-all ease-in-out duration-200'}
         onClick={async () => await signIn('google', { callbackUrl: 'http://localhost:3000' })}
       >
         <FcGoogle size={30}/>

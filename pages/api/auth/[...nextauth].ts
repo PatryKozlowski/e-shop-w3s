@@ -73,7 +73,7 @@ export function requestWrapper (req: NextApiRequest, res: NextApiResponse): [req
           if (cookie) return cookie
           else return ''
         }
-        // Revert to default behaviour when not in the credentials provider callback flow
+
         return await encode({ token, secret, maxAge })
       },
       decode: async ({ token, secret }) => {
@@ -110,6 +110,7 @@ export function requestWrapper (req: NextApiRequest, res: NextApiResponse): [req
           })
 
           if (!user) return null
+
           if (user.password === null) return null
 
           const compareHashedPassword = await compare(password, user.password)

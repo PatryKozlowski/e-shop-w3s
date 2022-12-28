@@ -148,6 +148,7 @@ model User {
   password      String?
   emailVerified DateTime?
   image         String?
+  role          Role @default(user)
   address       UsersAdress[]
   accounts      Account[]
   sessions      Session[]
@@ -161,12 +162,24 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum Sex {
+  Ms
+  Mr
+}
+
+enum Role {
+  admin
+  user
+}
+
 model UsersAdress {
-  id     String @id @default(cuid())
-  userId String @unique
-  name   String
-  street String
-  city   String
-  
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String @id @default(cuid())
+  userId      String @unique
+  name        String
+  street      String
+  city        String
+  sex         Sex
+  phoneNumber String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

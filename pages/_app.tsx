@@ -1,6 +1,7 @@
 import React from 'react'
 import '../styles/globals.css'
 import 'react-toastify/dist/ReactToastify.css'
+import 'react-phone-number-input/style.css'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 import Layout from '../components/Layout'

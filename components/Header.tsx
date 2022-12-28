@@ -3,9 +3,7 @@ import { useRouter } from 'next/router'
 import { MdSearch } from 'react-icons/md'
 import { useAppSelector } from '../hooks/useAppSelector'
 import ShopingCart from './ShopingCart'
-import Cart from './Cart'
 import AccountIcon from './AccountIcon'
-import AccountMenu from './AccountMenu'
 
 const Header = (): JSX.Element => {
   const [isShowSearchInput, setShowSeatchInput] = React.useState<boolean>(false)
@@ -21,7 +19,10 @@ const Header = (): JSX.Element => {
     }
   }, [])
 
-  const isOnlyCategoryRoute = headerTitleFromRoute(route) === '' || headerTitleFromRoute(route) === 'Login' || headerTitleFromRoute(route) === 'Register'
+  const isOnlyCategoryRoute = headerTitleFromRoute(route) === ''
+  || headerTitleFromRoute(route) === 'Login'
+  || headerTitleFromRoute(route) === 'Register'
+  || headerTitleFromRoute(route) === 'User'
 
   React.useEffect(() => {
     if (isOpenCart) {
@@ -32,7 +33,7 @@ const Header = (): JSX.Element => {
   }, [isOpenCart])
 
   return (
-    <header className={'px-4 lg:px-0 w-full'}>
+    <header className={'hidden lg:block px-4 lg:px-0 w-full'}>
       <div className={`flex items-center p-2 ${isOnlyCategoryRoute ? 'justify-end' : 'justify-between'} `}>
         {
           !isOnlyCategoryRoute ?
@@ -60,16 +61,6 @@ const Header = (): JSX.Element => {
           <AccountIcon />
           <ShopingCart />
         </div>
-      </div>
-
-      {/* Account menu */}
-
-      <AccountMenu />
-
-      {/* Cart  */}
-
-      <div className={'h-full'}>
-        <Cart />
       </div>
     </header >
   )

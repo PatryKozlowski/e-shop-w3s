@@ -91,7 +91,7 @@ const Nav = ({ children }: Props): JSX.Element => {
           {
             isShowSubNav && !isSmall ?
               <motion.div
-                className={'py-2 px-4 text-[15px] flex flex-col'}
+                className={'text-[15px] flex flex-col'}
                 initial={'enter'}
                 animate={isShowSubNav ? 'exit' : 'enter'}
                 variants={subMenuAnimate}

@@ -62,3 +62,35 @@ export interface ProductProps {
     updatedAt: Date
   }>
 }
+
+export interface ProfileFormProps {
+  name: string
+  street: string
+  city: string
+  sex: string
+  phoneNumber: number
+  email: string
+}
+
+export interface UserAddressProps {
+  userInfo: {
+    name: string
+    street: string
+    city: string
+    sex: string
+    phoneNumber: number
+  }
+}
+
+export interface ResponseProps {
+  status: number
+  message: string
+}
+
+export interface InputDisabledProps {
+  nameInput: boolean
+  streetInput: boolean
+  cityInput: boolean
+  phoneInput: boolean
+  emailInput: boolean
+}

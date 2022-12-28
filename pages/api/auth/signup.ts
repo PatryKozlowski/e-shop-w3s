@@ -31,7 +31,7 @@ const signUpHandler = async (req: NextApiRequest, res: NextApiResponse): Promise
     })
 
     if (isUserExists) {
-      res.status(422).json({ message: USER_EXISTS, status: 422 })
+      res.status(404).json({ message: USER_EXISTS, status: 404 })
     }
 
     if (!(password === repeatPassword)) {
@@ -62,7 +62,7 @@ const signUpHandler = async (req: NextApiRequest, res: NextApiResponse): Promise
       res.status(500).json({ message: UNABLE_LINK_ACCOUNT_USER_PROFILE, status: 500 })
     }
   } else {
-    res.status(500).json({ message: 'HTTP method not valid (only POST)' })
+    res.status(405).json({ message: 'HTTP method not valid (only POST)' })
   }
 }
 

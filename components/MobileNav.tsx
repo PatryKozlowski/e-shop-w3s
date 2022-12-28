@@ -6,7 +6,7 @@ import { openMobileNav } from '../redux/mobileNavMenuSlice'
 import AccountIcon from './AccountIcon'
 import HamburegerButton from './HamburegerButton'
 import Logo from './Logo'
-import ShopingBucket from './ShopingCart'
+import ShopingCart from './ShopingCart'
 
 const MobileNav = (): JSX.Element => {
   const dispatch = useAppDispatch()
@@ -27,7 +27,7 @@ const MobileNav = (): JSX.Element => {
         < Logo />
         <div className={'flex items-center justify-center'}>
           <AccountIcon />
-          <ShopingBucket />
+          <ShopingCart />
           <div className={'px-4 py-4 mr-2'}>
             <HamburegerButton
               isOpen={isOpenNavMenu}

@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
+import AccountMenu from './AccountMenu'
 import Banner from './Banner'
+import Cart from './Cart'
 import Contact from './Contact'
 import Footer from './Footer'
 import Header from './Header'
@@ -15,32 +17,50 @@ interface Props {
 
 const Layout = ({ children }: Props): JSX.Element => {
   const { route } = useRouter()
+
   return (
-    <div className={'mx-w-full lg:max-w-container lg:mx-auto flex flex-col'}>
-      <MobileNav />
-      <Nav>
-        <Logo />
-      </Nav>
-      <Header />
-      <main className={'lg:w-[950px] lg:ml-[250px] lg:px-4 mt-24 lg:mt-0'}>
-
-        { route === '/login' || route === '/register' || route === '/profile'
-          ?
-            <>
-              { children }
-            </>
+    <div className={'w-full lg:max-w-container lg:mx-auto flex flex-col'}>
+      {/* <div> */}
+      {
+        route === '/user/forgot-password/[id]/[token]' ?
+          null
           :
-            <>
-              <Banner />
-              {children}
+          <>
+            <MobileNav />
+            <Nav>
+              <Logo />
+            </Nav>
+            <Header />
 
-              <Subscribe />
+            {/* Account menu */}
 
-              <Contact />
-            </>
+            <AccountMenu />
+
+            {/* Cart  */}
+
+            <div className={'h-full'}>
+              <Cart />
+            </div>
+          </>
+      }
+      <main className={'lg:w-[950px] lg:ml-[250px] lg:px-4 mt-28 lg:mt-0'}>
+        {/* <main> */}
+        { route === '/login' || route === '/register' || route === '/profile' || route === '/user/forgot-password' || route === '/user/forgot-password/[id]/[token]' ?
+          <>
+            {children}
+          </>
+          :
+          <>
+            <Banner />
+            {children}
+
+            <Subscribe />
+
+            <Contact />
+          </>
       }
       </main>
-      { route === '/login' || route === '/register' || route === '/profile' ? null : <Footer />}
+      { route === '/login' || route === '/register' || route === '/profile' || route === '/user/forgot-password' || route === '/user/forgot-password/[id]/[token]' ? null : <Footer />}
     </div>
   )
 }

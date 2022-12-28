@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Products from '../../components/Products'
 import type { GetStaticProps } from 'next'
-import type { ProductsProps } from '../../types'
+import type { ProductsProps } from '../../types/index'
 import prisma from '../../lib/prisma'
 
 const Jeans = ({ products }: ProductsProps): React.ReactElement => {

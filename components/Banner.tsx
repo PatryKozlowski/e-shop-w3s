@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 const Banner = (): JSX.Element => {
   return (
-    <section className={'relative px-4 lg:px-0'}>
+    <section className={'relative px-4 mb-4 lg:mb-0 lg:px-0'}>
       <Image
         src={'https://www.w3schools.com/w3images/jeans.jpg'}
         alt={'Banner image'}
